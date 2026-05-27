@@ -1,0 +1,704 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    font-family:Arial, Helvetica, sans-serif;
+    background:black;
+}
+
+/* PANTALLAS */
+
+#intro,
+.pantalla{
+
+    width:100%;
+    height:100vh;
+
+    background:url('../img/fondo.jpg');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
+}
+
+/* OVERLAY */
+
+.overlay{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.7);
+}
+
+/* INTRO */
+
+.intro-content{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    color:white;
+}
+
+.intro-content h1{
+
+    font-size:90px;
+
+    text-shadow:
+    0 0 10px black,
+    0 0 30px black;
+
+    animation:zoom 2s infinite alternate;
+}
+
+.intro-content p{
+
+    font-size:28px;
+
+    margin-top:20px;
+}
+
+/* LOADER */
+
+.loader{
+
+    width:80px;
+    height:80px;
+
+    border:8px solid rgba(255,255,255,0.2);
+
+    border-top:8px solid #ff6600;
+
+    border-radius:50%;
+
+    margin:40px auto;
+
+    animation:spin 1s linear infinite;
+}
+
+/* BOXES */
+
+.box,
+.menu-box,
+.opciones-box{
+
+    background:rgba(0,0,0,0.60);
+
+    backdrop-filter:blur(10px);
+
+    border-radius:25px;
+
+    border:1px solid rgba(255,255,255,0.1);
+
+    box-shadow:
+    0 0 20px rgba(0,0,0,0.6);
+
+    color:white;
+}
+
+/* LOGIN */
+
+.box{
+
+    width:420px;
+
+    padding:40px;
+
+    text-align:center;
+}
+
+.box h2{
+
+    margin-bottom:30px;
+
+    color:#ffcc66;
+}
+
+/* INPUTS */
+
+.box input{
+
+    width:100%;
+
+    padding:16px;
+
+    margin:12px 0;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,0.10);
+
+    color:white;
+
+    outline:none;
+
+    transition:0.3s;
+}
+
+.box input:focus{
+
+    box-shadow:
+    0 0 15px #00ccff;
+}
+
+/* BOTONES */
+
+button{
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+#btnEntrar,
+#btnRegistrar{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+        45deg,
+        #ff6600,
+        #ff0000
+    );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+}
+
+#btnEntrar:hover,
+#btnRegistrar:hover{
+
+    transform:scale(1.03);
+}
+
+.btn-secundario{
+
+    width:100%;
+
+    padding:15px;
+
+    margin-top:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#222;
+
+    color:white;
+}
+
+/* MENU */
+
+.menu-box{
+
+    width:500px;
+
+    padding:50px;
+
+    text-align:center;
+}
+
+.menu-box h1{
+
+    font-size:60px;
+
+    color:#ffcc66;
+}
+
+.menu-box h3{
+
+    margin:20px 0 40px;
+
+    color:#00ccff;
+}
+
+.menu-btn{
+
+    width:100%;
+
+    padding:18px;
+
+    margin-top:20px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#111;
+
+    color:white;
+
+    font-size:20px;
+}
+
+.menu-btn:hover{
+
+    transform:scale(1.03);
+
+    background:#222;
+}
+
+/* OPCIONES */
+
+#opciones{
+
+    overflow-y:auto;
+
+    padding:40px;
+}
+
+.opciones-box{
+
+    width:1600px;
+
+    padding:40px;
+}
+
+/* PERFIL SUPERIOR */
+
+.perfil-jugador{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:stretch;
+
+    gap:25px;
+
+    margin-bottom:30px;
+}
+
+/* PERFIL IZQUIERDA */
+
+.perfil-left{
+
+    width:350px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    background:rgba(255,255,255,0.08);
+
+    border-radius:25px;
+
+    padding:20px;
+}
+
+.perfil-left img{
+
+    width:120px;
+    height:120px;
+
+    border-radius:15px;
+
+    object-fit:cover;
+
+    border:4px solid #ff6600;
+}
+
+.perfil-left h3{
+
+    font-size:32px;
+
+    margin-bottom:10px;
+
+    color:#ffcc66;
+}
+
+.perfil-left p{
+
+    font-size:20px;
+
+    color:#00ccff;
+}
+
+/* PERFIL DERECHA */
+
+.perfil-right{
+
+    flex:1;
+
+    background:rgba(255,255,255,0.08);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+#loreNombre{
+
+    color:#00ccff;
+
+    font-size:34px;
+
+    margin-bottom:15px;
+}
+
+#loreHistoria{
+
+    color:#ddd;
+
+    line-height:1.8;
+
+    margin-bottom:20px;
+
+    max-width:900px;
+}
+
+/* INFO EXTRA */
+
+.lore-mini{
+
+    display:flex;
+
+    gap:40px;
+
+    flex-wrap:wrap;
+}
+
+.lore-mini span{
+
+    background:rgba(255,255,255,0.08);
+
+    padding:10px 15px;
+
+    border-radius:12px;
+}
+
+.lore-mini strong{
+
+    color:#ff6600;
+}
+
+/* SONIDO */
+
+.sonido-box{
+
+    background:rgba(255,255,255,0.08);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    margin-bottom:30px;
+}
+
+.titulo-sonido{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+#volumen{
+
+    width:100%;
+
+    margin-top:20px;
+}
+
+#toggleSonido{
+
+    width:60px;
+    height:60px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(
+        45deg,
+        #ff6600,
+        #ff0000
+    );
+
+    color:white;
+
+    font-size:25px;
+}
+
+#toggleSonido:hover{
+
+    transform:scale(1.1);
+}
+
+/* TIENDA */
+
+.tienda-avatar{
+
+    margin-top:30px;
+}
+
+.tienda-avatar h2{
+
+    margin-bottom:20px;
+
+    color:#00ccff;
+}
+
+.avatars-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:20px;
+}
+
+/* CARDS */
+
+.avatar-card{
+
+    background:rgba(255,255,255,0.08);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    min-height:470px;
+
+    transition:0.3s;
+}
+
+.avatar-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 0 20px rgba(0,204,255,0.3);
+}
+
+/* IMAGENES */
+
+.avatar-card img{
+
+    width:100%;
+    height:260px;
+
+    object-fit:cover;
+
+    border-radius:15px;
+
+    border:3px solid #00ccff;
+
+    margin-bottom:15px;
+}
+
+.avatar-card h4{
+
+    font-size:28px;
+
+    margin-bottom:10px;
+}
+
+.avatar-card p{
+
+    color:#ffcc66;
+
+    margin-bottom:20px;
+}
+
+/* BOTONES AVATAR */
+
+.comprar-avatar,
+.equipado,
+.equipar-avatar{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    color:white;
+
+    font-weight:bold;
+
+    font-size:18px;
+}
+
+/* COMPRAR */
+
+.comprar-avatar{
+
+    background:
+    linear-gradient(
+        45deg,
+        #ff6600,
+        #ff0000
+    );
+}
+
+/* EQUIPAR */
+
+.equipar-avatar{
+
+    background:
+    linear-gradient(
+        45deg,
+        #0066ff,
+        #00ccff
+    );
+}
+
+/* EQUIPADO */
+
+.equipado{
+
+    background:
+    linear-gradient(
+        45deg,
+        #00aa55,
+        #00dd88
+    );
+
+    cursor:default;
+}
+
+/* VOLVER */
+
+.volver-menu{
+
+    width:100%;
+
+    margin-top:40px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#222;
+
+    color:white;
+
+    font-size:18px;
+}
+
+/* ALERTAS */
+
+.alerta-rpg{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100vh;
+
+    background:rgba(0,0,0,0.75);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+.alerta-contenido{
+
+    width:420px;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        #1a1a1a,
+        #330000
+    );
+
+    border:3px solid #ff6600;
+
+    color:white;
+}
+
+.icono-alerta{
+
+    font-size:70px;
+
+    color:#ff6600;
+
+    margin-bottom:20px;
+}
+
+/* ANIMACIONES */
+
+@keyframes spin{
+
+    100%{
+        transform:rotate(360deg);
+    }
+
+}
+
+@keyframes zoom{
+
+    from{
+        transform:scale(1);
+    }
+
+    to{
+        transform:scale(1.05);
+    }
+
+}
