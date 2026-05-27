@@ -5,6 +5,12 @@
 const musicaMenu =
 document.getElementById("musicaMenu");
 
+const volumen =
+document.getElementById("volumen");
+
+const toggleSonido =
+document.getElementById("toggleSonido");
+
 // ==========================
 // PANTALLAS
 // ==========================
@@ -50,9 +56,6 @@ document.getElementById("btnRegistrar");
 const volverLogin =
 document.getElementById("volverLogin");
 
-volverLogin.innerHTML =
-"Ir al Login";
-
 const registroUser =
 document.getElementById("registroUser");
 
@@ -96,23 +99,7 @@ const puntosJugador =
 document.getElementById("puntosJugador");
 
 // ==========================
-// LORE
-// ==========================
-
-const loreNombre =
-document.getElementById("loreNombre");
-
-const loreHistoria =
-document.getElementById("loreHistoria");
-
-const loreClase =
-document.getElementById("loreClase");
-
-const lorePoder =
-document.getElementById("lorePoder");
-
-// ==========================
-// ALERTAS
+// ALERTA
 // ==========================
 
 const alertaRPG =
@@ -135,35 +122,41 @@ let puntos = 0;
 let avatarsComprados = [];
 
 // ==========================
-// ALERTA RPG
+// ALERTAS
 // ==========================
 
 function mostrarAlerta(
     titulo,
     texto,
-    icono
+    icono = "bi bi-fire"
 ){
 
     document.querySelector(
         ".icono-alerta i"
     ).className = icono;
 
-    tituloAlerta.innerHTML = titulo;
+    tituloAlerta.innerHTML =
+    titulo;
 
-    textoAlerta.innerHTML = texto;
+    textoAlerta.innerHTML =
+    texto;
 
-    alertaRPG.classList.remove("d-none");
+    alertaRPG.classList.remove(
+        "d-none"
+    );
 
     setTimeout(()=>{
 
-        alertaRPG.classList.add("d-none");
+        alertaRPG.classList.add(
+            "d-none"
+        );
 
     },2500);
 
 }
 
 // ==========================
-// GUARDAR DATOS
+// SAVE
 // ==========================
 
 function saveUserData(){
@@ -191,20 +184,49 @@ function saveUserData(){
 }
 
 // ==========================
-// CARGAR DATOS
+// LOAD
 // ==========================
 
 function loadUserData(){
 
     if(!currentUser) return;
 
-    puntos = parseInt(
+    // PUNTOS DEL JUEGO
+
+    const puntosJuego = parseInt(
+
+        localStorage.getItem(
+            "playerCoins"
+        )
+
+    ) || 0;
+
+    // PUNTOS USUARIO
+
+    const puntosUsuario = parseInt(
 
         localStorage.getItem(
             currentUser + "_coins"
         )
 
     ) || 0;
+
+    // USAR MAYOR
+
+    puntos = Math.max(
+        puntosJuego,
+        puntosUsuario
+    );
+
+    // GUARDAR BIEN
+
+    localStorage.setItem(
+
+        currentUser + "_coins",
+
+        puntos
+
+    );
 
     avatarsComprados =
 
@@ -222,6 +244,31 @@ function loadUserData(){
 }
 
 // ==========================
+// MENU
+// ==========================
+
+function openMenu(){
+
+    intro.classList.add("d-none");
+
+    login.classList.add("d-none");
+
+    registro.classList.add("d-none");
+
+    opciones.classList.add("d-none");
+
+    menu.classList.remove("d-none");
+
+    loadUserData();
+
+    bienvenida.innerHTML =
+    "Bienvenido " + currentUser;
+
+    updateAvatarButtons();
+
+}
+
+// ==========================
 // INTRO
 // ==========================
 
@@ -233,10 +280,6 @@ setTimeout(()=>{
         "currentUser"
     );
 
-    // ==========================
-    // SOLO MENU SI VIENE DEL JUEGO
-    // ==========================
-
     if(
 
         window.location.hash === "#menu" &&
@@ -244,51 +287,57 @@ setTimeout(()=>{
 
     ){
 
-        intro.classList.add("d-none");
-
-        login.classList.add("d-none");
-
-        registro.classList.add("d-none");
-
-        menu.classList.remove("d-none");
-
-        loadUserData();
-
-        bienvenida.innerHTML =
-        "Bienvenido " + currentUser;
-
-        // avatar
-
-        const avatarGuardado =
-
-        localStorage.getItem(
-
-            currentUser + "_avatar"
-
-        );
-
-        if(avatarGuardado){
-
-            avatarActual.src =
-            avatarGuardado;
-
-        }
-
-        updateAvatarButtons();
+        openMenu();
 
         return;
 
     }
-
-    // ==========================
-    // LOGIN NORMAL
-    // ==========================
 
     intro.classList.add("d-none");
 
     login.classList.remove("d-none");
 
 },3000);
+
+// ==========================
+// LOGIN
+// ==========================
+
+btnEntrar.addEventListener("click",()=>{
+
+    const pass =
+
+    localStorage.getItem(
+
+        "user_" + loginUser.value
+
+    );
+
+    if(pass === loginPass.value){
+
+        currentUser =
+        loginUser.value;
+
+        localStorage.setItem(
+            "currentUser",
+            currentUser
+        );
+
+        musicaMenu.play();
+
+        openMenu();
+
+    }else{
+
+        mostrarAlerta(
+            "ERROR",
+            "Contraseña incorrecta",
+            "bi bi-exclamation-triangle-fill"
+        );
+
+    }
+
+});
 
 // ==========================
 // REGISTRO
@@ -316,27 +365,6 @@ volverLogin.addEventListener("click",()=>{
 
 btnRegistrar.addEventListener("click",()=>{
 
-    if(
-
-        registroUser.value === "" ||
-        registroPass.value === ""
-
-    ){
-
-        mostrarAlerta(
-
-            "ERROR",
-
-            "Completa todos los campos",
-
-            "bi bi-exclamation-triangle-fill"
-
-        );
-
-        return;
-
-    }
-
     localStorage.setItem(
 
         "user_" + registroUser.value,
@@ -346,71 +374,9 @@ btnRegistrar.addEventListener("click",()=>{
     );
 
     mostrarAlerta(
-
-        "REGISTRO EXITOSO",
-
-        "Cuenta creada correctamente",
-
-        "bi bi-fire"
-
+        "Cuenta creada",
+        "Ya puedes iniciar sesión"
     );
-
-});
-
-// ==========================
-// LOGIN
-// ==========================
-
-btnEntrar.addEventListener("click",()=>{
-
-    const pass =
-
-    localStorage.getItem(
-
-        "user_" + loginUser.value
-
-    );
-
-    if(
-
-        pass === loginPass.value
-
-    ){
-
-        currentUser =
-        loginUser.value;
-
-        localStorage.setItem(
-            "currentUser",
-            currentUser
-        );
-
-        loadUserData();
-
-        musicaMenu.play();
-
-        login.classList.add("d-none");
-
-        menu.classList.remove("d-none");
-
-        bienvenida.innerHTML =
-        "Bienvenido " + currentUser;
-
-        updateAvatarButtons();
-
-    }else{
-
-        mostrarAlerta(
-
-            "ERROR",
-
-            "Usuario o contraseña incorrectos",
-
-            "bi bi-exclamation-triangle-fill"
-
-        );
-
-    }
 
 });
 
@@ -418,15 +384,12 @@ btnEntrar.addEventListener("click",()=>{
 // NUEVO JUEGO
 // ==========================
 
-nuevoJuego.addEventListener(
-    "click",
-    ()=>{
+nuevoJuego.addEventListener("click",()=>{
 
-        window.location.href =
-        "game/game.html";
+    window.location.href =
+    "game/game.html";
 
-    }
-);
+});
 
 // ==========================
 // OPCIONES
@@ -441,8 +404,7 @@ abrirOpciones.addEventListener("click",()=>{
     nombrePerfil.innerHTML =
     currentUser;
 
-    puntosJugador.innerHTML =
-    "Puntos: " + puntos;
+    loadUserData();
 
 });
 
@@ -470,51 +432,50 @@ salir.addEventListener("click",()=>{
         "currentUser"
     );
 
+    window.location.hash = "";
+
     menu.classList.add("d-none");
 
     opciones.classList.add("d-none");
-
-    registro.classList.add("d-none");
 
     login.classList.remove("d-none");
 
 });
 
 // ==========================
-// EQUIPAR AVATAR
+// AUDIO
 // ==========================
 
-function equiparAvatar(
-    avatar,
-    boton
-){
+volumen.addEventListener("input",()=>{
 
-    avatarActual.src = avatar;
+    musicaMenu.volume =
+    volumen.value / 100;
 
-    localStorage.setItem(
+});
 
-        currentUser + "_avatar",
+toggleSonido.addEventListener("click",()=>{
 
-        avatar
+    musicaMenu.muted =
+    !musicaMenu.muted;
 
-    );
+    if(musicaMenu.muted){
 
-    loreNombre.innerHTML =
-    boton.dataset.nombre;
+        toggleSonido.innerHTML =
+        '<i class="bi bi-volume-mute-fill"></i>';
 
-    loreHistoria.innerHTML =
-    boton.dataset.historia;
+    }else{
 
-    loreClase.innerHTML =
-    boton.dataset.clase;
+        toggleSonido.innerHTML =
+        '<i class="bi bi-volume-up-fill"></i>';
 
-    lorePoder.innerHTML =
-    boton.dataset.poder;
+        musicaMenu.play();
 
-}
+    }
+
+});
 
 // ==========================
-// BOTONES AVATAR
+// AVATARES
 // ==========================
 
 const botonesAvatar =
@@ -541,26 +502,8 @@ function updateAvatarButtons(){
             btn.innerHTML =
             "Equipar";
 
-            btn.classList.remove(
-                "btn-danger"
-            );
-
-            btn.classList.add(
-                "btn-success"
-            );
-
-        }else{
-
-            btn.innerHTML =
-            "Comprar";
-
-            btn.classList.remove(
-                "btn-success"
-            );
-
-            btn.classList.add(
-                "btn-danger"
-            );
+            btn.style.background =
+            "#00c853";
 
         }
 
@@ -588,19 +531,20 @@ botonesAvatar.forEach(btn=>{
 
         ){
 
-            equiparAvatar(
-                avatar,
-                btn
+            avatarActual.src =
+            avatar;
+
+            localStorage.setItem(
+
+                currentUser + "_avatar",
+
+                avatar
+
             );
 
             mostrarAlerta(
-
-                "AVATAR EQUIPADO",
-
-                "Nuevo personaje activo",
-
-                "bi bi-stars"
-
+                "Avatar equipado",
+                btn.dataset.nombre
             );
 
             return;
@@ -612,13 +556,9 @@ botonesAvatar.forEach(btn=>{
         if(puntos < precio){
 
             mostrarAlerta(
-
-                "SIN PUNTOS",
-
-                "Necesitas más monedas",
-
+                "Sin monedas",
+                "Necesitas más puntos",
                 "bi bi-exclamation-triangle-fill"
-
             );
 
             return;
@@ -640,19 +580,9 @@ botonesAvatar.forEach(btn=>{
 
         updateAvatarButtons();
 
-        equiparAvatar(
-            avatar,
-            btn
-        );
-
         mostrarAlerta(
-
-            "COMPRA EXITOSA",
-
-            "Avatar desbloqueado",
-
-            "bi bi-gem"
-
+            "Comprado",
+            btn.dataset.nombre
         );
 
     });
@@ -674,21 +604,6 @@ window.addEventListener("load",()=>{
     if(currentUser){
 
         loadUserData();
-
-        const avatarGuardado =
-
-        localStorage.getItem(
-
-            currentUser + "_avatar"
-
-        );
-
-        if(avatarGuardado){
-
-            avatarActual.src =
-            avatarGuardado;
-
-        }
 
         updateAvatarButtons();
 
